@@ -40,11 +40,14 @@ public class Emprestimo {
 
     }
 
-    public Emprestimo(Integer idEmprestimo, LocalDate dataRealizada, LocalDate dataDevolução, Boolean finalizado) {
+    public Emprestimo(Integer idEmprestimo, LocalDate dataRealizada, LocalDate dataDevolução, Boolean finalizado,
+            Cliente cliente, Livro livro) {
         this.idEmprestimo = idEmprestimo;
         this.dataRealizada = dataRealizada;
         this.dataDevolução = dataDevolução;
         this.finalizado = false;
+        this.cliente = cliente;
+        this.livro = livro;
     }
 
     public Integer getIdEmprestimo() {
@@ -77,6 +80,22 @@ public class Emprestimo {
 
     public void setFinalizado(Boolean finalizado) {
         this.finalizado = finalizado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
     }
 
 }
