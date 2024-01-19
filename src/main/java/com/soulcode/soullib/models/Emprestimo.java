@@ -1,13 +1,14 @@
 package com.soulcode.soullib.models;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,15 +23,24 @@ public class Emprestimo {
     private LocalDate dataRealizada;
 
     @Column(nullable = false)
-    private Date dataDevolução;
+    private LocalDate dataDevolução;
 
     private Boolean finalizado;
+
+    // Muitos emprestimos para um cliente
+    @ManyToOne
+    @JoinColumn(name = "fk_cliente_id")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_livro_id")
+    private Livro livro;
 
     public Emprestimo() {
 
     }
 
-    public Emprestimo(Integer idEmprestimo, LocalDate dataRealizada, Date dataDevolução, Boolean finalizado) {
+    public Emprestimo(Integer idEmprestimo, LocalDate dataRealizada, LocalDate dataDevolução, Boolean finalizado) {
         this.idEmprestimo = idEmprestimo;
         this.dataRealizada = dataRealizada;
         this.dataDevolução = dataDevolução;
@@ -53,11 +63,11 @@ public class Emprestimo {
         this.dataRealizada = dataRealizada;
     }
 
-    public Date getDataDevolução() {
+    public LocalDate getDataDevolução() {
         return dataDevolução;
     }
 
-    public void setDataDevolução(Date dataDevolução) {
+    public void setDataDevolução(LocalDate dataDevolução) {
         this.dataDevolução = dataDevolução;
     }
 
