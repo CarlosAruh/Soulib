@@ -1,8 +1,8 @@
-### Soulib
+# **Soulib**
 
 ## Projeto Java Spring Boot
 
-# Dependencias
+### Dependencias
 
 **Spring Web**
 
@@ -14,7 +14,7 @@
 
 **Thymeleaf**
 
-# Stack utilizada
+### Stack utilizada
 
 **Front-end:** HTML, CSS, JavaScript
 
