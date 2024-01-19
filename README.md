@@ -2,19 +2,19 @@
 
 ## Projeto Java Spring Boot
 
-### Dependencias
+### Dependencias:
 
-**Spring Web**
+* Spring Web
 
-**Spring Boot DevTools**
+* Spring Boot DevTools
 
-**MySQL Driver**
+* MySQL Driver
 
-**Spring Data JPA**
+* Spring Data JPA
 
-**Thymeleaf**
+* Thymeleaf
 
-### Stack utilizada
+### Stack utilizada:
 
 **Front-end:** HTML, CSS, JavaScript
 
