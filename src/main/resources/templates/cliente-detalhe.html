@@ -9,9 +9,10 @@
   <body>
     <main>
       <a href="/clientes">&#9666; Voltar</a>
-      <h1>Nome</h1>
-      <p>Email</p>
-      <p>Telefone</p>
+      <h1 th:text="${cliente.nome}"></h1>
+      <!--Concatenar informações de duas formas-->
+      <p th:text="'Email: ' + ${cliente.Email}"></p>
+      <p>Telefone: <span th:text="${cliente.Telefone}"></span></p>
     </main>
     <script src="/js/main.js"></script>
   </body>
