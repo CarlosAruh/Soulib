@@ -25,6 +25,12 @@
         </thead>
         <tbody>
           <tr th:each="cliente : ${listaClientes}">
+            <td>
+              <a
+                th:href="'/clientes/'+${cliente.idCliente}"
+                th:text="${cliente.nome}"
+              ></a>
+            </td>
             <td th:text="${cliente.nome}"></td>
             <td th:text="${cliente.Email}"></td>
             <td th:text="${cliente.Telefone}"></td>
