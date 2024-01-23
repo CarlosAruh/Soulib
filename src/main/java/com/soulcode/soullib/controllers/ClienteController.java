@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.soulcode.soullib.models.Cliente;
 import com.soulcode.soullib.repositories.ClienteRepository;
+import org.springframework.web.bind.annotation.RequestBody;
 
 // Os mapeamentos dentro deste controller
 // serão utilizados pelo Spring
@@ -99,6 +100,23 @@ public class ClienteController {
             mvErro.addObject("msg", "Cliente não encontrado. Impossivel de editar");
             return mvErro;
         }
+    }
+
+    @PostMapping("/clientes/update")
+    public String updateCliente(Cliente cliente) {
+        // Na ação de atualizar o iD do cliente atual sera enviado junto
+        try {
+            Optional<Cliente> clienteOpt = clienteRepository.findById(cliente.getIdCliente());
+            if (clienteOpt.isPresent()) {
+                // Antes de efetuar a operação, será checado o campo ID.
+                // Se houver um valor, será executado update, se não houver
+                // será executado um create.
+                clienteRepository.save(cliente);
+            }
+        } catch (Exception ex) {
+            return "erro";
+        }
+        return "redirect:/clientes";
     }
 
 }

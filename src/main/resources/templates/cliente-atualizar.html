@@ -11,7 +11,7 @@
       <a href="/clientes">&#9666; Voltar</a>
       <h1>Editar Cliente</h1>
       <hr />
-      <form action="" method="post">
+      <form action="/clientes/update" method="post">
         <!-- Na edição, devemos fornecer o ID para que seja indicado qual dado vai ser alterado -->
         <input type="hidden" name="idCliente" th:value="${cliente.idCliente}" />
 

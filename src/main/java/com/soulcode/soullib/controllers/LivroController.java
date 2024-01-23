@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.soulcode.soullib.models.Cliente;
 import com.soulcode.soullib.models.Livro;
 import com.soulcode.soullib.repositories.LivroRepository;
 
@@ -81,4 +80,19 @@ public class LivroController {
             return mvErro;
         }
     }
+
+    @PostMapping("/livros/update")
+    public String updateLivro(Livro livro) {
+
+        try {
+            Optional<Livro> livroOpt = livroRepository.findById(livro.getIdLivro());
+            if (livroOpt.isPresent()) {
+                livroRepository.save(livro);
+            }
+        } catch (Exception ex) {
+            return "erro";
+        }
+        return "redirect:/livros";
+    }
+
 }
