@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.soulcode.soullib.models.Cliente;
 import com.soulcode.soullib.models.Livro;
 import com.soulcode.soullib.repositories.LivroRepository;
 
@@ -64,5 +65,20 @@ public class LivroController {
         }
 
         return "redirect:/livros";
+    }
+
+    @GetMapping("/livros/{id}/edit")
+    public ModelAndView paginaAtualizarLivro(@PathVariable Integer id) {
+        Optional<Livro> livroOpt = livroRepository.findById(id);
+        if (livroOpt.isPresent()) { // cliente encontrado?
+            Livro livro = livroOpt.get();
+            ModelAndView mv = new ModelAndView("livro-atualizar");
+            mv.addObject("livro", livro);
+            return mv;
+        } else {
+            ModelAndView mvErro = new ModelAndView("erro");
+            mvErro.addObject("msg", "Livro não encontrado. Impossivel de editar");
+            return mvErro;
+        }
     }
 }
