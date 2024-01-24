@@ -14,7 +14,6 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "emprestimos")
 public class Emprestimo {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEmprestimo;
@@ -23,31 +22,21 @@ public class Emprestimo {
     private LocalDate dataRealizada;
 
     @Column(nullable = false)
-    private LocalDate dataDevolução;
+    private LocalDate dataDevolucao;
 
-    private Boolean finalizado;
+    // Por padrão: opcional
+    private Boolean finalizado = false; // BIT (0 -> false, 1 -> true)
 
-    // Muitos emprestimos para um cliente
-    @ManyToOne
-    @JoinColumn(name = "fk_cliente_id")
+    // Lê-se: Muitos empréstimos p/ um cliente
+    @ManyToOne // N:1/1:N
+    @JoinColumn(name = "fk_cliente_id") // Indica um nome para chave estrangeira
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "fk_livro_id")
-    private Livro livro;
+    private Livro livroEmprestado;
 
-    public Emprestimo() {
-
-    }
-
-    public Emprestimo(Integer idEmprestimo, LocalDate dataRealizada, LocalDate dataDevolução, Boolean finalizado,
-            Cliente cliente, Livro livro) {
-        this.idEmprestimo = idEmprestimo;
-        this.dataRealizada = dataRealizada;
-        this.dataDevolução = dataDevolução;
-        this.finalizado = false;
-        this.cliente = cliente;
-        this.livro = livro;
+    public Emprestimo() { // Construtor
     }
 
     public Integer getIdEmprestimo() {
@@ -66,12 +55,12 @@ public class Emprestimo {
         this.dataRealizada = dataRealizada;
     }
 
-    public LocalDate getDataDevolução() {
-        return dataDevolução;
+    public LocalDate getDataDevolucao() {
+        return dataDevolucao;
     }
 
-    public void setDataDevolução(LocalDate dataDevolução) {
-        this.dataDevolução = dataDevolução;
+    public void setDataDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
     }
 
     public Boolean getFinalizado() {
@@ -90,12 +79,11 @@ public class Emprestimo {
         this.cliente = cliente;
     }
 
-    public Livro getLivro() {
-        return livro;
+    public Livro getLivroEmprestado() {
+        return livroEmprestado;
     }
 
-    public void setLivro(Livro livro) {
-        this.livro = livro;
+    public void setLivroEmprestado(Livro livroEmprestado) {
+        this.livroEmprestado = livroEmprestado;
     }
-
 }

@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.soulcode.soullib.models.Cliente;
 import com.soulcode.soullib.repositories.ClienteRepository;
-import org.springframework.web.bind.annotation.RequestBody;
 
 // Os mapeamentos dentro deste controller
 // serão utilizados pelo Spring

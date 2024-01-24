@@ -2,12 +2,7 @@ USE soulib_db;
 
 INSERT INTO
     clientes (nome, email, telefone)
-VALUES
-    (
-        'Maria Silva',
-        'maria.silva@example.com',
-        '11987654321'
-    ),
+VALUES ('Maria Silva', 'maria.silva@example.com', '11987654321'),
     (
         'João Oliveira',
         'joao.oliveira@example.com',

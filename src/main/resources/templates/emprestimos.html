@@ -31,7 +31,6 @@
           />Finalizado?</label
         >
 
-        <!-- Select Livros -->
         <select name="idLivro" required>
           <option selected disabled value="">Selecione um livro</option>
           <option th:each="livro : ${listaLivros}" th:value="${livro.idLivro}">
@@ -39,7 +38,7 @@
             <span th:text="${livro.autor}"></span>
           </option>
         </select>
-        <!-- Select Cliente -->
+
         <select name="idCliente" required>
           <option selected disabled value="">Selecione um cliente</option>
           <option
@@ -53,6 +52,53 @@
 
         <button type="submit">Enviar</button>
       </form>
+      <!---->
+      <h1>Emprestimos</h1>
+      <p>Lista de emprestimos.</p>
+      <hr />
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Livro</th>
+            <th>Data de Retirada</th>
+            <th>Data de Entrega</th>
+            <th>Entregue</th>
+            <th>Excluir</th>
+            <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="emprestimo : ${listaEmprestimos}">
+            <td>
+              <a
+                th:href="'/emprestimos/'+${emprestimo.idEmprestimo}"
+                th:text="${emprestimo.cliente.nome}"
+              >
+              </a>
+            </td>
+            <td th:text="${emprestimo.livro.titulo}"></td>
+            <td th:text="${emprestimo.dataRealizada}"></td>
+            <td th:text="${emprestimo.dataDevolucao}"></td>
+            <td th:text="${emprestimo.finalizado ? 'Sim' : 'Não'}"></td>
+            <td>
+              <form action="/emprestimos/delete" method="post">
+                <input
+                  type="hidden"
+                  name="id"
+                  th:value="${emprestimo.idEmprestimo}"
+                />
+                <button type="submit">Excluir</button>
+              </form>
+            </td>
+            <td>
+              <a th:href="">
+                <button>Editar</button>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </main>
     <script src="/js/main.js"></script>
   </body>

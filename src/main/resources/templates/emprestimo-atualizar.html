@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar Empréstimo - Soulib</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <main>
+      <a href="/emprestimos">&#9666; Voltar</a>
+      <h1>Editar Empréstimo</h1>
+      <hr />
+      <th>
+        <form action="/emprestimos/update" method="post">
+          <!-- Na edição, fornecemos o ID para indicar qual dado vai ser alterado -->
+          <input
+            type="hidden"
+            name="idEmprestimo"
+            th:value="${emprestimo.idEmprestimo}"
+          />
+          <label for="nome">Nome<span style="color: red">*</span></label>
+          <input
+            type="text"
+            name="nome"
+            id="nome"
+            th:value="${emprestimo.cliente.nome}"
+            maxlength="100"
+            required
+          />
+          <!--<label for="clientes">Cliente</label>
+          <select name="clientes" id="clientes" required>
+            <option
+              th:each="clientes : ${listaClientes}"
+              th:value="${emprestimo.cliente.nome}"
+            >
+              <span th:text="${cliente.nome}"></span>
+            </option>
+          </select>-->
+          <!--<label for="idLivro">Livro</label>
+          <select name="idLivro" id="idLivro" required>
+            <option
+              th:each="livro : ${listaLivros}"
+              th:value="${livro.idLivro}"
+              th:selected="${livro.idLivro == emprestimo.livroEmprestado.idLivro}"
+            >
+              <span th:text="${livro.titulo}"></span>
+            </option>
+          </select> -->
+          <!--<label for="titulo">Titulo<span style="color: red">*</span></label>
+          <input
+            type="text"
+            name="titulo"
+            id="titulo"
+            th:value="${emprestimo.livroEmprestado.titulo}"
+            maxlength="120"
+            required
+          />
+          -->
+          <label for="dataRealizada"
+            >Data Realizada <span style="color: red">*</span></label
+          >
+          <input
+            type="date"
+            name="dataRealizada"
+            id="dataRealizada"
+            th:value="${emprestimo.dataRealizada}"
+            required
+          />
+
+          <label for="dataDevolucao"
+            >Data Devolução <span style="color: red">*</span></label
+          >
+          <input
+            type="date"
+            name="dataDevolucao"
+            id="dataDevolucao"
+            th:value="${emprestimo.dataDevolucao}"
+            required
+          />
+
+          <label for="finalizado">
+            <input
+              type="checkbox"
+              name="finalizado"
+              id="finalizado"
+              th:checked="${emprestimo.finalizado}"
+            />
+            Finalizado?
+          </label>
+
+          <!-- Outros campos conforme necessário -->
+
+          <button type="submit">Atualizar</button>
+        </form>
+      </th>
+    </main>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
