@@ -20,25 +20,17 @@
             th:value="${emprestimo.idEmprestimo}"
           />
           <label for="nome">Nome<span style="color: red">*</span></label>
-          <input
-            type="text"
-            name="nome"
-            id="nome"
-            th:value="${emprestimo.cliente.nome}"
-            maxlength="100"
-            required
-          />
-          <!--<label for="clientes">Cliente</label>
-          <select name="clientes" id="clientes" required>
+          <select th:name="idCliente" id="nome" required>
             <option
-              th:each="clientes : ${listaClientes}"
-              th:value="${emprestimo.cliente.nome}"
+              th:each="cliente : ${listaClientes}"
+              th:value="${cliente.idCliente}"
+              th:selected="${cliente.idCliente == emprestimo.cliente.idCliente}"
             >
               <span th:text="${cliente.nome}"></span>
             </option>
-          </select>-->
-          <!--<label for="idLivro">Livro</label>
-          <select name="idLivro" id="idLivro" required>
+          </select>
+          <label for="livro">Livro<span style="color: red">*</span></label>
+          <select th:name="idLivro" id="livro" required>
             <option
               th:each="livro : ${listaLivros}"
               th:value="${livro.idLivro}"
@@ -46,17 +38,23 @@
             >
               <span th:text="${livro.titulo}"></span>
             </option>
-          </select> -->
-          <!--<label for="titulo">Titulo<span style="color: red">*</span></label>
-          <input
-            type="text"
-            name="titulo"
-            id="titulo"
-            th:value="${emprestimo.livroEmprestado.titulo}"
-            maxlength="120"
+          </select>
+
+          <!-- Sinto muito Amir, mas não mostro o livro instanciando -->
+          <!-- <label for="livro">Livro<span style="color: red">*</span></label>
+          <select
+            th:value="${emprestimo.livroEmprestado.idLivro}"
+            name="idLivro"
+            id="livro"
             required
-          />
-          -->
+          >
+            <option
+              th:each="livro : ${listaLivros}"
+              th:value="${livro.idLivro}"
+            >
+              <span th:text="${livro.titulo}"></span>
+            </option>
+          </select> -->
           <label for="dataRealizada"
             >Data Realizada <span style="color: red">*</span></label
           >
@@ -88,9 +86,6 @@
             />
             Finalizado?
           </label>
-
-          <!-- Outros campos conforme necessário -->
-
           <button type="submit">Atualizar</button>
         </form>
       </th>

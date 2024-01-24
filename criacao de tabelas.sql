@@ -26,11 +26,20 @@ CREATE TABLE IF NOT EXISTS EMPRESTIMOS(
     data_devolucao DATE NOT NULL,
     fk_cliente_id INT,
     fk_livro_id INT,
-    CONSTRAINT FK_CLIENTES_ID FOREIGN KEY (fk_cliente_id) REFERENCES CLIENTES (id_cliente),
-    CONSTRAINT FK_LIVROS_ID FOREIGN KEY (fk_livro_id) REFERENCES LIVROS (id_livro),
+    CONSTRAINT FK_CLIENTE_ID FOREIGN KEY (fk_cliente_id) REFERENCES CLIENTES (id_cliente),
+    CONSTRAINT FK_LIVRO_ID FOREIGN KEY (fk_livro_id) REFERENCES LIVROS (id_livro),
     FINALIZADO BIT DEFAULT FALSE
 );
 
+
+ALTER TABLE emprestimos DROP FOREIGN KEY fk_clientes_id;
+
+
+ALTER TABLE emprestimos ADD CONSTRAINT fk_cliente_id FOREIGN KEY (fk_cliente_id) REFERENCES clientes(id_cliente);
+
+ALTER TABLE emprestimos DROP FOREIGN KEY fk_livros_id;
+
+ALTER TABLE emprestimos ADD CONSTRAINT fk_livro_id FOREIGN KEY (fk_livro_id) REFERENCES livros(id_livro);
 
 DROP TABLE EMPRESTIMOS
 SHOW COLUMNS FROM EMPRESTIMOS

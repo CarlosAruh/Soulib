@@ -25,7 +25,6 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Na tag que se repete aplique th:each -->
           <tr th:each="livro : ${listaLivros}">
             <td>
               <a
@@ -66,13 +65,13 @@
         <label for="descricao"
           >Descrição<span style="color: red">*</span></label
         >
-        <input
+        <textarea
           type="text"
           name="descricao"
           id="descricao"
           maxlength="180"
           required
-        />
+        ></textarea>
 
         <label for="editora">Editora<span style="color: red">*</span></label>
         <input

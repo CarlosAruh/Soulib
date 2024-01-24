@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,6 +43,61 @@ public class EmprestimoController {
         return mv;
     }
 
+    @PostMapping("/emprestimos/delete")
+    public String deleteEmprestimo(@RequestParam Integer id) {
+        try {
+            // Verifica se o empréstimo existe
+            Optional<Emprestimo> emprestimoOpt = emprestimoRepository.findById(id);
+
+            if (emprestimoOpt.isPresent()) {
+                Emprestimo emprestimo = emprestimoOpt.get();
+                emprestimoRepository.delete(emprestimo);
+            }
+        } catch (Exception ex) {
+            return "erro";
+        }
+        return "redirect:/emprestimos";
+    }
+
+    @GetMapping("/emprestimos/{id}")
+    public ModelAndView paginaDetalheEmprestimos(@PathVariable Integer id) {
+        // @Pathvariable = extrai da rota o valor correspondente
+        Optional<Emprestimo> emprestimoOpt = emprestimoRepository.findById(id);
+        // O cliente existe ou não
+
+        if (emprestimoOpt.isPresent()) {
+            Emprestimo emprestimo = emprestimoOpt.get();
+            ModelAndView mv = new ModelAndView("emprestimo-detalhe");
+            mv.addObject("emprestimo", emprestimo);
+            return mv;
+        } else {
+            ModelAndView mvErro = new ModelAndView("erro");
+            mvErro.addObject("msg", "O emprestimo não foi encontrado");
+            return mvErro;
+        }
+
+    }
+
+    @GetMapping("/emprestimos/{id}/edit")
+    public ModelAndView paginaAtualizarEmprestimo(@PathVariable Integer id) {
+        Optional<Emprestimo> emprestimoOpt = emprestimoRepository.findById(id);
+        List<Cliente> clientes = clienteRepository.findAll();
+        List<Livro> livros = livroRepository.findAll();
+
+        if (emprestimoOpt.isPresent()) { // Cliente encontrado?
+            Emprestimo emprestimo = emprestimoOpt.get();
+            ModelAndView mv = new ModelAndView("emprestimo-atualizar");
+            mv.addObject("emprestimo", emprestimo);
+            mv.addObject("listaClientes", clientes);
+            mv.addObject("listaLivros", livros);
+            return mv;
+        } else {
+            ModelAndView mvErro = new ModelAndView("erro");
+            mvErro.addObject("msg", "Emprestimo não encontrado. Impossível de editar.");
+            return mvErro;
+        }
+    }
+
     @PostMapping("/emprestimos/create")
     public String createEmprestimo(@RequestParam Integer idCliente, @RequestParam Integer idLivro,
             Emprestimo emprestimo) {
@@ -68,42 +124,35 @@ public class EmprestimoController {
         return "redirect:/emprestimos";
     }
 
-    /*
-     * @PostMapping("/emprestimos/delete")
-     * public String deleteEmprestimo(@RequestParam Integer idEmprestimo) {
-     * try {
-     * // Verifica se o empréstimo existe
-     * Optional<Emprestimo> emprestimoOpt =
-     * emprestimoRepository.findById(idEmprestimo);
-     * 
-     * if (emprestimoOpt.isPresent()) {
-     * Emprestimo emprestimo = emprestimoOpt.get();
-     * emprestimoRepository.delete(emprestimo);
-     * }
-     * } catch (Exception ex) {
-     * return "erro";
-     * }
-     * return "redirect:/emprestimos";
-     * }
-     * 
-     * @GetMapping("/emprestimos/{id}")
-     * public ModelAndView paginaDetalheEmprestimos(@PathVariable Integer id) {
-     * // @Pathvariable = extrai da rota o valor correspondente
-     * Optional<Emprestimo> emprestimoOpt = emprestimoRepository.findById(id);
-     * // O cliente existe ou não
-     * 
-     * if (emprestimoOpt.isPresent()) {
-     * Emprestimo emprestimo = emprestimoOpt.get();
-     * ModelAndView mv = new ModelAndView("emprestimo-detalhe");
-     * mv.addObject("emprestimo", emprestimo);
-     * return mv;
-     * } else {
-     * ModelAndView mvErro = new ModelAndView("erro");
-     * mvErro.addObject("msg", "O emprestimo não foi encontrado");
-     * return mvErro;
-     * }
-     * 
-     * }
-     */
+    @PostMapping("/emprestimos/update")
+    public String updateEmprestimo(@RequestParam Integer idCliente, @RequestParam Integer idLivro,
+            Emprestimo emprestimo) {
+        try {
+            Optional<Emprestimo> existingEmprestimoOpt = emprestimoRepository.findById(emprestimo.getIdEmprestimo());
+            Optional<Cliente> clienteOpt = clienteRepository.findById(idCliente);
+            Optional<Livro> livroOpt = livroRepository.findById(idLivro);
+
+            if (existingEmprestimoOpt.isPresent()) {
+                Emprestimo existingEmprestimo = existingEmprestimoOpt.get();
+                Cliente cliente = clienteOpt.get();
+                Livro livro = livroOpt.get();
+
+                existingEmprestimo.setCliente(cliente);
+                existingEmprestimo.setLivroEmprestado(livro);
+                existingEmprestimo.setDataRealizada(emprestimo.getDataRealizada());
+                existingEmprestimo.setDataDevolucao(emprestimo.getDataDevolucao());
+                existingEmprestimo.setFinalizado(emprestimo.getFinalizado());
+
+                emprestimoRepository.save(existingEmprestimo);
+            } else {
+                return "erro";
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "erro";
+        }
+        return "redirect:/emprestimos";
+    }
 
 }

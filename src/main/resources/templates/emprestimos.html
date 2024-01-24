@@ -77,7 +77,7 @@
               >
               </a>
             </td>
-            <td th:text="${emprestimo.livro.titulo}"></td>
+            <td th:text="${emprestimo.livroEmprestado.titulo}"></td>
             <td th:text="${emprestimo.dataRealizada}"></td>
             <td th:text="${emprestimo.dataDevolucao}"></td>
             <td th:text="${emprestimo.finalizado ? 'Sim' : 'Não'}"></td>
@@ -92,7 +92,7 @@
               </form>
             </td>
             <td>
-              <a th:href="">
+              <a th:href="'/emprestimos/'+${emprestimo.idEmprestimo}+'/edit'">
                 <button>Editar</button>
               </a>
             </td>

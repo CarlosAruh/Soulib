@@ -10,9 +10,10 @@
     <main>
       <a href="/clientes">&#9666; Voltar</a>
       <h1 th:text="${cliente.nome}"></h1>
-      <!--Concatenar informações de duas formas-->
-      <p th:text="'Email: ' + ${cliente.Email}"></p>
-      <p>Telefone: <span th:text="${cliente.Telefone}"></span></p>
+      <!-- Podemos concatenar informações 
+        no template nessas duas formas: -->
+      <p th:text="'Email: '+${cliente.email}"></p>
+      <p>Telefone: <span th:text="${cliente.telefone}"></span></p>
     </main>
     <script src="/js/main.js"></script>
   </body>

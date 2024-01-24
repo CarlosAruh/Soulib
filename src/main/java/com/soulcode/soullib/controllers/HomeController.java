@@ -1,19 +1,22 @@
 package com.soulcode.soullib.controllers;
-// ao acessar local host 8080/home devemos exibir a pag index
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-//configura como controlador web
+// Configura nossa classe como um controlador web
 @Controller
 public class HomeController {
+    // Configura o método para responder a uma requisição
+    // para /home
     @GetMapping({ "/", "/home", "/h" })
     public String paginaHome() {
-        return "index"; // indica qual view
+        // Dentro do método, vem a lógica do controlador
+        // Exibir páginas, buscar dados, validar dados.
+        return "index"; // Indica qual view será exibida
     }
 
     @GetMapping("/contato")
     public String paginaContato() {
-        return "contato"; // indica qual view
+        return "contato";
     }
 }

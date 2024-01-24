@@ -35,24 +35,22 @@ public class ClienteController {
         return mv; // Objeto configurado com a view e os dados que ela vai usar
     }
 
-    // parametro da rota: /clientes/5000, o valor da id =5000
+    // Parâmetro da rota: /clientes/5000, o valor do id = 5000
     @GetMapping("/clientes/{id}")
     public ModelAndView paginaDetalheCliente(@PathVariable Integer id) {
-        // @Pathvariable = extrai da rota o valor correspondente
+        // @PathVariable = extrai da rota o valor correspondente
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
-        // O cliente existe ou não
 
-        if (clienteOpt.isPresent()) {
-            Cliente cliente = clienteOpt.get();
+        if (clienteOpt.isPresent()) { // caso exista
+            Cliente cliente = clienteOpt.get(); // pega o objeto do cliente encontrado
             ModelAndView mv = new ModelAndView("cliente-detalhe");
             mv.addObject("cliente", cliente);
             return mv;
-        } else {
+        } else { // caso não exista
             ModelAndView mvErro = new ModelAndView("erro");
-            mvErro.addObject("msg", "O cliente não foi encontrado");
+            mvErro.addObject("msg", "O cliente não foi encontrado.");
             return mvErro;
         }
-
     }
 
     @PostMapping("/clientes/delete") // action, method, name
@@ -68,18 +66,16 @@ public class ClienteController {
         // Redireciona o usuário para a lista de clientes
         // após a remoção feita com sucesso
         return "redirect:/clientes";
-
     }
-
-    // inserção
 
     @PostMapping("/clientes/create")
     public String createCliente(Cliente cliente) {
-        // @RequestBody => monta o objeto de acordo com os dados vindos
+        // monta o objeto de acordo com os dados vindos
         // do formulário de requisição (corpo)
+
         try {
             clienteRepository.save(cliente);
-        } catch (Exception e) {
+        } catch (Exception ex) {
             return "erro";
         }
 
@@ -89,23 +85,25 @@ public class ClienteController {
     @GetMapping("/clientes/{id}/edit")
     public ModelAndView paginaAtualizarCliente(@PathVariable Integer id) {
         Optional<Cliente> clienteOpt = clienteRepository.findById(id);
-        if (clienteOpt.isPresent()) { // cliente encontrado?
+
+        if (clienteOpt.isPresent()) { // Cliente encontrado?
             Cliente cliente = clienteOpt.get();
             ModelAndView mv = new ModelAndView("cliente-atualizar");
             mv.addObject("cliente", cliente);
             return mv;
         } else {
             ModelAndView mvErro = new ModelAndView("erro");
-            mvErro.addObject("msg", "Cliente não encontrado. Impossivel de editar");
+            mvErro.addObject("msg", "Cliente não encontrado. Impossível de editar.");
             return mvErro;
         }
     }
 
     @PostMapping("/clientes/update")
     public String updateCliente(Cliente cliente) {
-        // Na ação de atualizar o iD do cliente atual sera enviado junto
+        // Na ação de atualizar, o ID do cliente atual será enviado junto.
         try {
             Optional<Cliente> clienteOpt = clienteRepository.findById(cliente.getIdCliente());
+
             if (clienteOpt.isPresent()) {
                 // Antes de efetuar a operação, será checado o campo ID.
                 // Se houver um valor, será executado update, se não houver
@@ -115,9 +113,9 @@ public class ClienteController {
         } catch (Exception ex) {
             return "erro";
         }
+
         return "redirect:/clientes";
     }
-
 }
 
 // Template Engine (thymeleaf) = recurso para gerar as páginas
